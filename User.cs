@@ -8,13 +8,35 @@ namespace HomeWork7
 {
     struct User
     {
-        private long ID;
-        private DateTime CreateDate;
-        private string UserName;
-        private byte Age;
-        private int Height;
-        private DateTime DateOfBirth;
-        private string PlaceOfBirth;
+        /// <summary>
+        /// Уникальный идентификатор пользователя
+        /// </summary>
+        public long ID { get; }
+        /// <summary>
+        /// Дата создания
+        /// </summary>
+        public DateTime CreateDate { get; }
+        /// <summary>
+        /// ФИО
+        /// </summary>
+        public string UserName { get; set; }
+        /// <summary>
+        /// Возраст
+        /// </summary>
+        public byte Age { get; set; }
+        /// <summary>
+        /// Рост
+        /// </summary>
+        public int Height { get; set; }
+        /// <summary>
+        /// Дата рождения
+        /// </summary>
+        public DateTime DateOfBirth { get; set; }
+        /// <summary>
+        /// Место рождения
+        /// </summary>
+        public string PlaceOfBirth { get; set; }
+
         /// <summary>
         /// создание пользователя
         /// </summary>

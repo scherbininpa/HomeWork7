@@ -2,5 +2,4 @@
 
 using HomeWork7;
 
-User U = new User(1);
 Console.WriteLine("Hello, World!");
