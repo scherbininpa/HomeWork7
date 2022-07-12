@@ -16,13 +16,13 @@ namespace HomeWork7
         private DateTime DateOfBirth;
         private string PlaceOfBirth;
         /// <summary>
-        /// Создание пользователя
+        /// создание пользователя
         /// </summary>
-        /// <param name="ID">Уникальный идентификатор</param>
+        /// <param name="ID">уникальный идентификатор</param>
         /// <param name="UserName">ФИО</param>
         /// <param name="Age">Возраст</param>
         /// <param name="Height">Рост</param>
-        /// <param name="DateOfBirth">День рождения</param>
+        /// <param name="DateOfBirth">Дата рождения</param>
         /// <param name="PlaceOfBirth">Место рождения</param>
         public User(long ID,string UserName, byte Age, int Height, DateTime DateOfBirth, string PlaceOfBirth)
         { 
@@ -35,21 +35,21 @@ namespace HomeWork7
             this.PlaceOfBirth = PlaceOfBirth;
         }
         /// <summary>
-        /// Создание пользователя
+        /// создание пользователя
         /// </summary>
-        /// <param name="ID">Уникальный идентификатор</param>
+        /// <param name="ID">уникальный идентификатор</param>
         /// <param name="UserName">ФИО</param>
         /// <param name="Age">Возраст</param>
         /// <param name="Height">Рост</param>
-        /// <param name="DateOfBirth">День рождения</param>
+        /// <param name="DateOfBirth">Дата рождения</param>
         public User(long ID, string UserName, byte Age, int Height, DateTime DateOfBirth) :
             this(ID, UserName, Age, Height, DateOfBirth, string.Empty)
         { 
         }
         /// <summary>
-        /// Создание пользователя
+        /// создание пользователя
         /// </summary>
-        /// <param name="ID">Уникальный идентификатор</param>
+        /// <param name="ID">уникальный идентификатор</param>
         /// <param name="UserName">ФИО</param>
         /// <param name="Age">Возраст</param>
         /// <param name="Height">Рост</param>
@@ -58,9 +58,9 @@ namespace HomeWork7
         {
         }
         /// <summary>
-        /// Создание пользователя
+        /// создание пользователя
         /// </summary>
-        /// <param name="ID">Уникальный идентификатор</param>
+        /// <param name="ID">уникальный идентификатор</param>
         /// <param name="UserName">ФИО</param>
         /// <param name="Age">Возраст</param>
         public User(long ID, string UserName, byte Age) :
@@ -68,20 +68,20 @@ namespace HomeWork7
         {
         }
         /// <summary>
-        /// Создание пользователя
+        /// создание пользователя
         /// </summary>
-        /// <param name="ID">Уникальный идентификатор</param>
+        /// <param name="ID">уникальный идентификатор</param>
         /// <param name="UserName">ФИО</param>
         public User(long ID, string UserName) :
             this(ID, UserName, 0, 0, new DateTime(1900, 1, 1, 0, 0, 0), string.Empty)
         {
         }
         /// <summary>
-        /// Создание пользователя
+        /// создание пользователя
         /// </summary>
-        /// <param name="ID">Уникальный идентификатор</param>
+        /// <param name="ID">уникальный идентификатор</param>
         public User(long ID) :
-        this(ID, "User"+ID, 0, 0, new DateTime(1900, 1, 1, 0, 0, 0), string.Empty)
+            this(ID, "User"+ID, 0, 0, new DateTime(1900, 1, 1, 0, 0, 0), string.Empty)
         {
         }
 
