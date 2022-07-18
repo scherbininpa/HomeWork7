@@ -8,7 +8,7 @@ namespace HomeWork7
 {
     struct Loader
     {
-        User[] ArrUsers;
+        public User[] ArrUsers;
         /// <summary>
         /// разделитель полей в файле
         /// </summary>
@@ -20,23 +20,23 @@ namespace HomeWork7
         /// <summary>
         /// Количество пользователей
         /// </summary>
-        int TotalUser;
+        public int TotalUser { get; set; }
         /// <summary>
         /// Структура для работы с файлом Пользователей
         /// </summary>
         /// <param name="Path">Путь к файлу</param>
         public Loader(string Path)
         {
-            this.ArrUsers = new User[4];
+            ArrUsers = new User[4];
             if (new FileInfo(Path).Exists)
             {
                 this.Path = Path;
-                TotalUser = 0;
+                TotalUser = -1;
             } 
             else
             {
                 this.Path = string.Empty;
-                TotalUser = 0;
+                TotalUser = -1;
                 Print($"Файл {Path} не найден!");
             }
             
@@ -45,20 +45,21 @@ namespace HomeWork7
 
         private void ReDim()
         { 
-            Array.Resize(ref ArrUsers, TotalUser*2);
+            Array.Resize(ref ArrUsers, TotalUser+1);
         }
         /// <summary>
         /// Загрузка данных из файла
         /// </summary>
-        public async void Load()
+        public void Load()
         {
             string line;
             string[] UserData;
             
             using (StreamReader SR = new StreamReader(this.Path))
             {
-                while ((line = await SR.ReadLineAsync()) != null)
+                while ((line = SR.ReadLine()) != null)
                 {
+                    ++TotalUser;
                     UserData = line.Split(Separator);
                     if (TotalUser >= ArrUsers.Length) ReDim();
                     User user = new User(Convert.ToInt32(UserData[0]),
@@ -69,20 +70,19 @@ namespace HomeWork7
                                          Convert.ToDateTime(UserData[5]),
                                          UserData[6]);
                     ArrUsers[TotalUser] = user;
-                    ++TotalUser;
                 }
             }
         }
         /// <summary>
         /// Сохранение данных в файл
         /// </summary>
-        public async void Save()
+        public void Save()
         {
             using (StreamWriter SW = new StreamWriter(this.Path, false))
             {
-                for (int i = 0; i < TotalUser; i++)
+                for (int i = 0; i <= TotalUser; i++)
                 {
-                    await SW.WriteLineAsync(ArrUsers[i].ToString(Separator));
+                    SW.WriteLine(ArrUsers[i].ToString(Separator));
                 }
             }
         
@@ -93,27 +93,12 @@ namespace HomeWork7
         /// <param name="UserName">ФИО</param>
         /// <param name="DateOfBirth">Дата рождения</param>
         /// <param name="PlaceOfBirth">Место рождения</param>
-        public void CreateUser(string UserName, DateTime DateOfBirth, string PlaceOfBirth)
+        public void AddUser(string UserName, byte Age, int Height, DateTime DateOfBirth, string PlaceOfBirth)
         {
-
+            ++TotalUser;
+            ArrUsers[TotalUser] = new User(TotalUser,DateTime.Now,UserName,Age,Height,DateOfBirth,PlaceOfBirth);
         }
-        /// <summary>
-        /// Добавить пользователя
-        /// </summary>
-        /// <param name="UserName">ФИО</param>
-        /// <param name="DateOfBirth">Дата рождения</param>
-        public void CreateUser(string UserName, DateTime DateOfBirth)
-        {
 
-        }
-        /// <summary>
-        /// Добавить пользователя
-        /// </summary>
-        /// <param name="UserName">ФИО</param>
-        public void CreateUser(string UserName)
-        {
-
-        }
         /// <summary>
         /// Удалить пользователя
         /// </summary>
@@ -143,7 +128,22 @@ namespace HomeWork7
         /// </summary>
         /// <param name="ID">Уникальный идентификатор пользователя</param>
         public void Print(long ID)
-        { 
+        {
+            Console.WriteLine($"\tID\tДата и время добавления\tФИО\t\t\t\tВозраст\tРост\tДата рождения\tМесто рождения");
+            Console.WriteLine($"\t{ArrUsers[ID].ID:00}\t{ArrUsers[ID].CreateDate}\t{ArrUsers[ID].UserName,-25}\t{ArrUsers[ID].Age}" +
+                            $"\t{ArrUsers[ID].Height}\t{ArrUsers[ID].DateOfBirth}\t{ArrUsers[ID].PlaceOfBirth}");
+
+        }
+        /// <summary>
+        /// Вывод на экран записи всех пользователя
+        /// </summary>
+        public void Print()
+        {
+            Console.WriteLine($"\tID\tДата и время добавления\tФИО\t\t\t\tВозраст\tРост\tДата рождения\tМесто рождения");
+            foreach (User user in ArrUsers)
+            {
+                Console.WriteLine($"\t{user.ID:00}\t{user.CreateDate}\t{user.UserName,-25}\t{user.Age}\t{user.Height}\t{user.DateOfBirth}\t{user.PlaceOfBirth}");
+            }
         }
         /// <summary>
         /// Вывод на экран сообщения
@@ -155,7 +155,8 @@ namespace HomeWork7
         }
         public void Sort()
         {
-            
+            //User[] user = { ArrUsers[1], ArrUsers[2], ArrUsers[3] }; 
+            Array.Sort(ArrUsers);
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HomeWork7
 {
-    struct User
+    struct User:IComparable
     {
         /// <summary>
         /// Уникальный идентификатор пользователя
@@ -57,62 +57,6 @@ namespace HomeWork7
             this.DateOfBirth = DateOfBirth;
             this.PlaceOfBirth = PlaceOfBirth;
         }
-        /// <summary>
-        /// создание пользователя
-        /// </summary>
-        /// <param name="ID">уникальный идентификатор</param>
-        /// <param name="CreateDate">дата создания</param>
-        /// <param name="UserName">ФИО</param>
-        /// <param name="Age">Возраст</param>
-        /// <param name="Height">Рост</param>
-        /// <param name="DateOfBirth">Дата рождения</param>
-        public User(long ID, DateTime CreateDate, string UserName, byte Age, int Height, DateTime DateOfBirth) :
-            this(ID, CreateDate, UserName, Age, Height, DateOfBirth, string.Empty)
-        { 
-        }
-        /// <summary>
-        /// создание пользователя
-        /// </summary>
-        /// <param name="ID">уникальный идентификатор</param>
-        /// <param name="CreateDate">дата создания</param>
-        /// <param name="UserName">ФИО</param>
-        /// <param name="Age">Возраст</param>
-        /// <param name="Height">Рост</param>
-        public User(long ID, DateTime CreateDate, string UserName, byte Age, int Height) :
-            this(ID, CreateDate, UserName, Age, Height, new DateTime(1900,1,1,0,0,0),string.Empty)
-        {
-        }
-        /// <summary>
-        /// создание пользователя
-        /// </summary>
-        /// <param name="ID">уникальный идентификатор</param>
-        /// <param name="CreateDate">дата создания</param>
-        /// <param name="UserName">ФИО</param>
-        /// <param name="Age">Возраст</param>
-        public User(long ID, DateTime CreateDate, string UserName, byte Age) :
-            this(ID, CreateDate,UserName, Age, 0, new DateTime(1900, 1, 1, 0, 0, 0), string.Empty)
-        {
-        }
-        /// <summary>
-        /// создание пользователя
-        /// </summary>
-        /// <param name="ID">уникальный идентификатор</param>
-        /// <param name="CreateDate">дата создания</param>
-        /// <param name="UserName">ФИО</param>
-        public User(long ID, DateTime CreateDate, string UserName) :
-            this(ID, CreateDate,UserName, 0, 0, new DateTime(1900, 1, 1, 0, 0, 0), string.Empty)
-        {
-        }
-        /// <summary>
-        /// создание пользователя
-        /// </summary>
-        /// <param name="ID">уникальный идентификатор</param>
-        /// <param name="CreateDate">дата создания</param>
-        public User(long ID, DateTime CreateDate) :
-            this(ID, CreateDate,"User" +ID, 0, 0, new DateTime(1900, 1, 1, 0, 0, 0), string.Empty)
-        {
-        }
-
         public string ToString(string Separator)
         {
             return string.Join(Separator,this.ID,
@@ -123,6 +67,10 @@ namespace HomeWork7
                                         this.DateOfBirth,
                                         this.PlaceOfBirth);
         }
-
+        public int CompareTo(object? o)
+        {
+            if (o is User user) return DateOfBirth.CompareTo(user.DateOfBirth);
+            else throw new ArgumentException("Некорректное значение параметра");
+        }
     }
 }
