@@ -10,7 +10,7 @@ namespace HomeWork7
     struct Menu
     {
         string[] MenuItems;
-        public Loader ObjLoader { get; }
+        public Loader ObjLoader { get; set; }
         public Menu(string Path)
         { 
             ObjLoader = new Loader(Path);
@@ -22,16 +22,42 @@ namespace HomeWork7
                                         "Загрузка записей в выбранном диапазоне дат",
                                         "Удаление записи",
                                         "ВЫХОД" };
-            ObjLoader.Load();
+            //ObjLoader.Load();
             ObjLoader.Print();
         }
 
-        public void PrintMenu()
+        public void Work()
+        {
+            bool isRepeat = true;
+            while (isRepeat)
+            {
+                PrintMenu();
+                isRepeat = ReadKeyAnsver();
+            }
+        }
+        private bool ReadKeyAnsver()
+        {
+            ConsoleKeyInfo key = Console.ReadKey();
+            switch (key.KeyChar)
+            { 
+                case '1':
+                    return true;
+                    break;
+                case '8':
+                    return false;
+                    break;
+                default:
+                    Console.WriteLine($"{Environment.NewLine}Пункт меню не найден!");
+                    return true;
+                    break;
+            }
+        }
+        private void PrintMenu()
         {
             Console.WriteLine($"{Environment.NewLine}МЕНЮ:");
             for (int i = 0; i < MenuItems.Length; i++)
             {
-                Console.WriteLine($"{i+1}. {MenuItems[i]}");
+                Console.WriteLine($"\t{i+1}. {MenuItems[i]}");
             }
         }
     }

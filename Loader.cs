@@ -8,7 +8,7 @@ namespace HomeWork7
 {
     struct Loader
     {
-        public User[] ArrUsers;
+        private User[] ArrUsers;
         /// <summary>
         /// разделитель полей в файле
         /// </summary>
@@ -27,17 +27,19 @@ namespace HomeWork7
         /// <param name="Path">Путь к файлу</param>
         public Loader(string Path)
         {
-            ArrUsers = new User[4];
+
             if (new FileInfo(Path).Exists)
             {
                 this.Path = Path;
                 TotalUser = -1;
+                ArrUsers = new User[1];
+                this.Load();
             } 
             else
             {
                 this.Path = string.Empty;
                 TotalUser = -1;
-                Print($"Файл {Path} не найден!");
+                throw new ArgumentException("Файл не найден.");
             }
             
 
@@ -50,11 +52,10 @@ namespace HomeWork7
         /// <summary>
         /// Загрузка данных из файла
         /// </summary>
-        public void Load()
+        private void Load()
         {
             string line;
             string[] UserData;
-            
             using (StreamReader SR = new StreamReader(this.Path))
             {
                 while ((line = SR.ReadLine()) != null)
@@ -140,7 +141,7 @@ namespace HomeWork7
         public void Print()
         {
             Console.WriteLine($"\tID\tДата и время добавления\tФИО\t\t\t\tВозраст\tРост\tДата рождения\tМесто рождения");
-            foreach (User user in ArrUsers)
+            foreach (User user in this.ArrUsers)
             {
                 Console.WriteLine($"\t{user.ID:00}\t{user.CreateDate}\t{user.UserName,-25}\t{user.Age}\t{user.Height}\t{user.DateOfBirth}\t{user.PlaceOfBirth}");
             }
