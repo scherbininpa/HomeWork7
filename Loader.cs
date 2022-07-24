@@ -153,10 +153,11 @@ namespace HomeWork7
         {
             Console.WriteLine(Message);
         }
-        public void Sort()
+        public void Sort(bool Ask = true )
         {
             //User[] user = { ArrUsers[1], ArrUsers[2], ArrUsers[3] }; 
             Array.Sort(ArrUsers);
+            if (!Ask)  Array.Reverse(ArrUsers);
         }
     }
 }
