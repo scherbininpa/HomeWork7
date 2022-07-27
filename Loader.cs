@@ -20,7 +20,7 @@ namespace HomeWork7
         /// <summary>
         /// Количество пользователей
         /// </summary>
-        public int TotalUser { get; set; }
+        private int TotalUser;
         /// <summary>
         /// Структура для работы с файлом Пользователей
         /// </summary>
@@ -31,26 +31,22 @@ namespace HomeWork7
             if (new FileInfo(Path).Exists)
             {
                 this.Path = Path;
-                TotalUser = -1;
-                ArrUsers = new User[1];
-                this.Load();
+                TotalUser = 0;
+                ArrUsers = new User[TotalUser];
+                Load();
             } 
             else
             {
                 this.Path = string.Empty;
-                TotalUser = -1;
+                TotalUser = 0;
                 throw new ArgumentException("Файл не найден.");
             }
             
 
         }
-        public User[] UserArray
-        {
-            get { return ArrUsers; }
-        }
         private void ReDim()
         { 
-            Array.Resize(ref ArrUsers, TotalUser+1);
+            Array.Resize(ref ArrUsers, TotalUser);
         }
         /// <summary>
         /// Загрузка данных из файла
@@ -66,14 +62,13 @@ namespace HomeWork7
                     ++TotalUser;
                     UserData = line.Split(Separator);
                     if (TotalUser >= ArrUsers.Length) ReDim();
-                    User user = new User(Convert.ToInt32(UserData[0]),
+                    ArrUsers[TotalUser-1] = new User(Convert.ToInt32(UserData[0]),
                                          Convert.ToDateTime(UserData[1]),
                                          UserData[2],
                                          Convert.ToByte(UserData[3]),
                                          Convert.ToInt16(UserData[4]),
                                          Convert.ToDateTime(UserData[5]),
                                          UserData[6]);
-                    ArrUsers[TotalUser] = user;
                 }
             }
         }
@@ -99,9 +94,9 @@ namespace HomeWork7
         /// <param name="PlaceOfBirth">Место рождения</param>
         public void AddUser(string UserName, byte Age, int Height, DateTime DateOfBirth, string PlaceOfBirth)
         {
-            ++TotalUser;
+            this.TotalUser++;
             ReDim();
-            ArrUsers[TotalUser] = new User(TotalUser,DateTime.Now,UserName,Age,Height,DateOfBirth,PlaceOfBirth);
+           this.ArrUsers[TotalUser-1] = new User(TotalUser,DateTime.Now,UserName,Age,Height,DateOfBirth,PlaceOfBirth);
         }
 
         /// <summary>

@@ -10,7 +10,7 @@ namespace HomeWork7
     struct Menu
     {
         string[] MenuItems;
-        public Loader ObjLoader { get; set; }
+        private Loader ObjLoader;
         public Menu(string Path)
         { 
             ObjLoader = new Loader(Path);
