@@ -44,7 +44,10 @@ namespace HomeWork7
             
 
         }
-
+        public User[] UserArray
+        {
+            get { return ArrUsers; }
+        }
         private void ReDim()
         { 
             Array.Resize(ref ArrUsers, TotalUser+1);
@@ -97,6 +100,7 @@ namespace HomeWork7
         public void AddUser(string UserName, byte Age, int Height, DateTime DateOfBirth, string PlaceOfBirth)
         {
             ++TotalUser;
+            ReDim();
             ArrUsers[TotalUser] = new User(TotalUser,DateTime.Now,UserName,Age,Height,DateOfBirth,PlaceOfBirth);
         }
 
@@ -141,7 +145,7 @@ namespace HomeWork7
         public void Print()
         {
             Console.WriteLine($"\tID\tДата и время добавления\tФИО\t\t\t\tВозраст\tРост\tДата рождения\tМесто рождения");
-            foreach (User user in this.ArrUsers)
+            foreach (User user in ArrUsers)
             {
                 Console.WriteLine($"\t{user.ID:00}\t{user.CreateDate}\t{user.UserName,-25}\t{user.Age}\t{user.Height}\t{user.DateOfBirth}\t{user.PlaceOfBirth}");
             }
