@@ -23,7 +23,7 @@ namespace HomeWork7
                                         "Удаление записи",
                                         "ВЫХОД" };
             //ObjLoader.Load();
-            ObjLoader.Print();
+            //ObjLoader.Print();
         }
 
         public void Work()
@@ -46,15 +46,19 @@ namespace HomeWork7
                     return true;
                     break;
                 case '2':
+                    PrintDescriptionUser();
                     return true;
                     break;
                 case '3':
+                    ChangeUserDescription();
                     return true;
                     break;
                 case '4':
+                    ObjLoader.Sort(true);
                     return true;
                     break;
                 case '5':
+                    ObjLoader.Sort(false);
                     return true;
                     break;
                 case '6':
@@ -72,31 +76,67 @@ namespace HomeWork7
                     break;
             }
         }
-
+        private void ChangeUserDescription()
+        {
+            Console.WriteLine("Укажите ID пользователя для редактивования");
+            long ID = FieldID();
+            if (ID != long.MinValue) 
+                ObjLoader.EditUser(ID, FieldUserName(), FieldAge(), FieldHeight(), FieldDateOfBirth(), FieldPlaceOfBirth());
+        }
+        private void PrintDescriptionUser()
+        {
+            Console.WriteLine("[1] - вывести все записи \n[2] - вывести указанную запись");
+            ConsoleKeyInfo key = Console.ReadKey();
+            switch (key.KeyChar)
+            {
+                case '1':
+                    ObjLoader.Print();
+                    break;
+                case '2':
+                    Console.WriteLine("Укажите ID записи для вывода");
+                    ObjLoader.Print(int.Parse(Console.ReadLine()) - 1);
+                    break;
+                default:
+                    Console.WriteLine($"{Environment.NewLine}Пункт меню не найден!");
+                    break;
+            }
+            Console.WriteLine(Environment.NewLine);
+        }
+        private long FieldID()
+        {
+            Console.WriteLine($"Укажите ID пользователя");
+            long ID = long.Parse(Console.ReadLine())-1;
+            return ObjLoader.CheckIDUser(ID)? ID: long.MinValue;
+        }
         private string FieldUserName()
         {
             Console.WriteLine($"Заполните поле - ФИО:");
-            return Console.ReadLine();
+            string UserName = Console.ReadLine();
+            return string.IsNullOrEmpty(UserName) ? String.Empty: UserName;
         }
         private byte FieldAge()
         {
             Console.WriteLine($"Заполните поле - Возраст:");
-            return byte.Parse(Console.ReadLine());
+            string Age = Console.ReadLine();
+            return string.IsNullOrEmpty(Age) ? byte.MinValue : byte.Parse(Age);
         }
         private int FieldHeight()
         {
             Console.WriteLine($"Заполните поле - Рост:");
-            return int.Parse(Console.ReadLine());
+            string Height = Console.ReadLine();
+            return string.IsNullOrEmpty(Height) ? int.MinValue : int.Parse(Height);
         }
         private DateTime FieldDateOfBirth()
         {
             Console.WriteLine($"Заполните поле - Дата рождения:");
-            return DateTime.Parse(Console.ReadLine());
+            string DateOfBirth = Console.ReadLine();
+            return string.IsNullOrEmpty(DateOfBirth) ? DateTime.MinValue : DateTime.Parse(DateOfBirth);
         }
         private string FieldPlaceOfBirth()
         {
             Console.WriteLine($"Заполните поле - Место рождения:");
-            return Console.ReadLine();
+            string PlaceOfBirth = Console.ReadLine();
+            return string.IsNullOrEmpty(PlaceOfBirth) ? String.Empty : PlaceOfBirth;
         }
         private void PrintMenu()
         {

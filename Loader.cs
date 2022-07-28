@@ -114,25 +114,44 @@ namespace HomeWork7
         /// <param name="ID">Уникальный идентификатор пользователя(используется для указания пользователя)</param>
         /// <param name="UserName">Новое значение ФИО</param>
         /// /// <param name="PlaceOfBirth">Место рождения пользователя</param>
-        public void EditUser(long ID, string UserName, string PlaceOfBirth="")
-        { }
-        /// <summary>
-        /// Редактирование даты рождения пользователя
-        /// </summary>
-        /// <param name="ID">Уникальный идентификатор пользователя(используется для указания пользователя)</param>
-        /// <param name="DateOfBirth">Новое значение даты рождения</param>
-        public void EditUser(long ID, DateTime DateOfBirth)
-        { }
+        public void EditUser(long ID, string UserName, byte Age, int Height, DateTime DateOfBirth,string PlaceOfBirth)
+        {
+            if (ID == long.MinValue)
+            {
+                Print("Пользователь не найден");
+            }
+            else {
+                this.ArrUsers[ID].UserName = String.IsNullOrEmpty(UserName) ? this.ArrUsers[ID].UserName : UserName;
+                this.ArrUsers[ID].Age = (Age == byte.MinValue) ? this.ArrUsers[ID].Age : Age;
+                this.ArrUsers[ID].Height = (Height == int.MinValue) ? this.ArrUsers[ID].Height : Height;
+                this.ArrUsers[ID].DateOfBirth = (DateOfBirth == DateTime.MinValue) ? this.ArrUsers[ID].DateOfBirth : DateOfBirth;
+                this.ArrUsers[ID].PlaceOfBirth = String.IsNullOrEmpty(PlaceOfBirth) ? this.ArrUsers[ID].PlaceOfBirth : PlaceOfBirth;
+            }
+        }
+        public bool CheckIDUser(long ID)
+        {
+            if (ID < 0 || ID > this.TotalUser)
+            {
+                Print("Пользователь не найден");
+                return false;
+            }
+            else { return true; }
+        }
         /// <summary>
         /// Вывод на экран записи пользователя
         /// </summary>
         /// <param name="ID">Уникальный идентификатор пользователя</param>
         public void Print(long ID)
         {
-            Console.WriteLine($"\tID\tДата и время добавления\tФИО\t\t\t\tВозраст\tРост\tДата рождения\tМесто рождения");
-            Console.WriteLine($"\t{ArrUsers[ID].ID:00}\t{ArrUsers[ID].CreateDate}\t{ArrUsers[ID].UserName,-25}\t{ArrUsers[ID].Age}" +
-                            $"\t{ArrUsers[ID].Height}\t{ArrUsers[ID].DateOfBirth}\t{ArrUsers[ID].PlaceOfBirth}");
-
+            if (ID < 0 || ID > this.TotalUser){ 
+                Console.WriteLine("ID не найден."); 
+            }
+            else
+            {
+                Console.WriteLine($"\tID\tДата и время добавления\tФИО\t\t\t\tВозраст\tРост\tДата рождения\tМесто рождения");
+                Console.WriteLine($"\t{ArrUsers[ID].ID:00}\t{ArrUsers[ID].CreateDate}\t{ArrUsers[ID].UserName,-25}\t{ArrUsers[ID].Age}" +
+                                $"\t{ArrUsers[ID].Height}\t{ArrUsers[ID].DateOfBirth}\t{ArrUsers[ID].PlaceOfBirth}");
+            }
         }
         /// <summary>
         /// Вывод на экран записи всех пользователя
