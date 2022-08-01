@@ -9,10 +9,11 @@ namespace HomeWork7
     struct worker
     {
         public int Id { get; set; }
+        public DateTime DateCreate { get; set; }
         public string FIO { get; set; }
         public int Age { get; set; }
         public int Height { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public DateTime PlaceOfBirth { get; set; }
+        public string PlaceOfBirth { get; set; }
     }
 }
