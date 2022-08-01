@@ -24,7 +24,7 @@ namespace HomeWork7
         {
             // здесь происходит чтение из файла
             // и возврат массива считанных экземпляров
-
+            this._totalUser = -1;
             string line;
             string[] UserData;
             worker[] arrWorker=new worker[_totalUser];
@@ -78,7 +78,7 @@ namespace HomeWork7
                     break;
                 }
             }
-
+            SaveData(arrWorker);
             // считывается файл, находится нужный Worker
             // происходит запись в файл всех Worker,
             // кроме удаляемого
@@ -96,6 +96,12 @@ namespace HomeWork7
         }
         public void AddWorker(worker worker)
         {
+            worker[] arrWorkers = GetAllWorkers();
+            worker.Id = arrWorkers[this._totalUser].Id+1;
+
+            ++this._totalUser; ReDim(arrWorkers);
+            arrWorkers[this._totalUser] = worker;
+            SaveData(arrWorkers);
             // присваиваем worker уникальный ID,
             // дописываем нового worker в файл
         }
