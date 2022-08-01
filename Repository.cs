@@ -52,6 +52,17 @@ namespace HomeWork7
 
         public worker GetWorkerById(int id)
         {
+            worker returnWorker = new worker();
+            worker[] arrWorker = GetAllWorkers();
+            foreach (worker _worker in arrWorker)
+            {
+                if (_worker.Id == id) {
+                    returnWorker = _worker;
+                    break;
+                }
+            }
+
+            return returnWorker;
             // происходит чтение из файла, возвращается Worker
             // с запрашиваемым ID
         }
