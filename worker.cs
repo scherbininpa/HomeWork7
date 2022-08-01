@@ -15,5 +15,18 @@ namespace HomeWork7
         public int Height { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string PlaceOfBirth { get; set; }
+
+        public string LineToWrite(string separator)
+        {
+            return string.Join(separator,
+                                Id,
+                                DateCreate,
+                                FIO,
+                                Age,
+                                Height,
+                                DateOfBirth,
+                                PlaceOfBirth);
+        }
     }
+
 }

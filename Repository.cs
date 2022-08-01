@@ -69,11 +69,31 @@ namespace HomeWork7
 
         public void DeleteWorker(int id)
         {
+            worker[] arrWorker = GetAllWorkers();
+            for (int i = 0; i < arrWorker.Length; i++)
+            {
+                if (arrWorker[i].Id==id)
+                {
+                    Array.Clear(arrWorker, i, 1);
+                    break;
+                }
+            }
+
             // считывается файл, находится нужный Worker
             // происходит запись в файл всех Worker,
             // кроме удаляемого
         }
 
+        private void SaveData(worker[] _workers)
+        {
+            using (StreamWriter SW = new StreamWriter(this._path, false))
+            {
+                foreach (var _worker in _workers)
+                {
+                    SW.WriteLine(_worker.LineToWrite(_separator));
+                }
+            }
+        }
         public void AddWorker(worker worker)
         {
             // присваиваем worker уникальный ID,
