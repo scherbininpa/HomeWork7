@@ -18,13 +18,13 @@ namespace HomeWork7
         }
         private void ReDim(worker[] arr)
         {
-            Array.Resize(ref arr, this._totalUser);
+            Array.Resize(ref arr, _totalUser);
         }
         public worker[] GetAllWorkers()
         {
             // здесь происходит чтение из файла
             // и возврат массива считанных экземпляров
-            this._totalUser = -1;
+            this._totalUser = 0;
             string line;
             string[] UserData;
             worker[] arrWorker=new worker[_totalUser];
@@ -35,7 +35,7 @@ namespace HomeWork7
                 {
                     ++this._totalUser;
                     UserData = line.Split(_separator);
-                    if (_totalUser >= arrWorker.Length) ReDim(arrWorker);
+                    if (_totalUser >= arrWorker.Length) Array.Resize(ref arrWorker, _totalUser);
 
                     tmpWorker.Id = Convert.ToInt32(UserData[0]);
                     tmpWorker.DateCreate = Convert.ToDateTime(UserData[1]);
@@ -44,7 +44,7 @@ namespace HomeWork7
                     tmpWorker.Height= Convert.ToInt32(UserData[4]);
                     tmpWorker.DateOfBirth= Convert.ToDateTime(UserData[5]);
                     tmpWorker.PlaceOfBirth= UserData[6];
-                    arrWorker[this._totalUser] = tmpWorker;
+                    arrWorker[this._totalUser-1] = tmpWorker;
                 }
             }
             return arrWorker;
@@ -108,9 +108,35 @@ namespace HomeWork7
 
         public worker[] GetWorkersBetweenTwoDates(DateTime dateFrom, DateTime dateTo)
         {
+            worker[] arrWorker = GetAllWorkers();
+            for (int i = 0; i < arrWorker.Length; i++)
+            {
+                int g = DateTime.Compare(dateFrom,arrWorker[i].DateCreate);
+                int g1 = DateTime.Compare(dateTo,arrWorker[i].DateCreate);
+                if (DateTime.Compare(dateFrom, arrWorker[i].DateCreate)>0 || DateTime.Compare(dateTo, arrWorker[i].DateCreate)<0)
+                {
+                    arrWorker = DeleteNullElements(arrWorker,i);
+                }
+            }
+            return arrWorker;
             // здесь происходит чтение из файла
             // фильтрация нужных записей
             // и возврат массива считанных экземпляров
+        }
+
+        private worker[] DeleteNullElements(worker[] arr, int index)
+        {
+            worker[] tmpWorker = new worker[arr.Length - 1];
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (i!=index)
+                {
+
+                    tmpWorker[(i < tmpWorker.Length)?i:i-1] = arr[i];
+
+                }
+            }
+            return tmpWorker;
         }
     }
 }
