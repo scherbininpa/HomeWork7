@@ -29,24 +29,28 @@ namespace HomeWork7
             string[] UserData;
             worker[] arrWorker=new worker[_totalUser];
             worker tmpWorker = new worker();
-            using (StreamReader SR = new StreamReader(this._path))
+            if (new FileInfo(_path).Exists)
             {
-                while ((line = SR.ReadLine()) != null)
+                using (StreamReader SR = new StreamReader(this._path))
                 {
-                    ++this._totalUser;
-                    UserData = line.Split(_separator);
-                    if (_totalUser >= arrWorker.Length) Array.Resize(ref arrWorker, _totalUser);
+                    while ((line = SR.ReadLine()) != null)
+                    {
+                        ++this._totalUser;
+                        UserData = line.Split(_separator);
+                        if (_totalUser >= arrWorker.Length) Array.Resize(ref arrWorker, _totalUser);
 
-                    tmpWorker.Id = Convert.ToInt32(UserData[0]);
-                    tmpWorker.DateCreate = Convert.ToDateTime(UserData[1]);
-                    tmpWorker.FIO= UserData[2];
-                    tmpWorker.Age = Convert.ToInt32(UserData[3]);
-                    tmpWorker.Height= Convert.ToInt32(UserData[4]);
-                    tmpWorker.DateOfBirth= Convert.ToDateTime(UserData[5]);
-                    tmpWorker.PlaceOfBirth= UserData[6];
-                    arrWorker[this._totalUser-1] = tmpWorker;
+                        tmpWorker.Id = Convert.ToInt32(UserData[0]);
+                        tmpWorker.DateCreate = Convert.ToDateTime(UserData[1]);
+                        tmpWorker.FIO = UserData[2];
+                        tmpWorker.Age = Convert.ToInt32(UserData[3]);
+                        tmpWorker.Height = Convert.ToInt32(UserData[4]);
+                        tmpWorker.DateOfBirth = Convert.ToDateTime(UserData[5]);
+                        tmpWorker.PlaceOfBirth = UserData[6];
+                        arrWorker[this._totalUser - 1] = tmpWorker;
+                    }
                 }
             }
+            else { System.IO.File.Create(_path); }
             return arrWorker;
         }
 
@@ -97,10 +101,14 @@ namespace HomeWork7
         public void AddWorker(worker worker)
         {
             worker[] arrWorkers = GetAllWorkers();
-            worker.Id = arrWorkers[this._totalUser].Id+1;
+            arrWorkers.OrderBy(w => w.Id);
+            _totalUser++;
+            Array.Resize(ref arrWorkers, _totalUser); 
 
-            ++this._totalUser; ReDim(arrWorkers);
-            arrWorkers[this._totalUser] = worker;
+            worker.Id = (_totalUser==0)? 1 : arrWorkers[this._totalUser-1].Id+1;
+            worker.DateCreate = DateTime.Now;
+            //++this._totalUser; Array.Resize(ref arrWorkers, _totalUser);
+            arrWorkers[this._totalUser-1] = worker;
             SaveData(arrWorkers);
             // присваиваем worker уникальный ID,
             // дописываем нового worker в файл

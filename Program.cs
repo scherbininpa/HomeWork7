@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using HomeWork7;
+using System.Globalization;
 string File = @"O:\sharpProekt\HomeWork\HomeWork7\Users.txt";
 
 Repository repository = new Repository(File);
@@ -9,7 +10,7 @@ arr.OrderBy(w => w.FIO);
 bool isRepeat = true;
 while (isRepeat)
 {
-    Console.WriteLine("МЕНЮ:");
+    Console.WriteLine($"{Environment.NewLine}МЕНЮ:");
     Console.WriteLine("\n\t[0] - Очистить консоль" +
                         "\n\t[1] - Вывести все записи" +
                         "\n\t[2] - Добавить запись" +
@@ -33,6 +34,7 @@ while (isRepeat)
             tmp.Height = FieldHeight();
             tmp.DateOfBirth = FieldDateOfBirth();
             tmp.PlaceOfBirth = FieldPlaceOfBirth();
+            repository.AddWorker(tmp);
             break;
         case "3":
             break;
@@ -57,7 +59,7 @@ static void Print(worker[] arr)
         foreach (worker item in arr)
         {
             Console.WriteLine($"\t{item.Id:00}\t{item.DateCreate}\t{item.FIO,-25}\t{item.Age}" +
-                            $"\t{item.Height}\t{item.DateOfBirth}\t{item.PlaceOfBirth}");
+                            $"\t{item.Height}\t{item.DateOfBirth:dd.MM.yyyy}\t{item.PlaceOfBirth}");
 
         }
     }
