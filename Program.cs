@@ -5,8 +5,8 @@ using System.Globalization;
 string File = @"O:\sharpProekt\HomeWork\HomeWork7\Users.txt";
 
 Repository repository = new Repository(File);
-worker[] arr= repository.GetWorkersBetweenTwoDates(Convert.ToDateTime("12.12.2020"),Convert.ToDateTime("12.12.2023"));
-arr.OrderBy(w => w.FIO);
+//worker[] arr= repository.GetWorkersBetweenTwoDates(Convert.ToDateTime("12.12.2020"),Convert.ToDateTime("12.12.2023"));
+//arr.OrderBy(w => w.FIO);
 bool isRepeat = true;
 while (isRepeat)
 {
@@ -37,8 +37,10 @@ while (isRepeat)
             repository.AddWorker(tmp);
             break;
         case "3":
+            repository.DeleteWorker(FieldID());
             break;
         case "4":
+            Print(repository.GetWorkersBetweenTwoDates(FieldDateFrom(),FieldDateTo()));
             break;
         case "5":
             break;
@@ -64,6 +66,21 @@ static void Print(worker[] arr)
         }
     }
     else { Console.WriteLine("Записи отсутствуют!"); }
+}
+static DateTime FieldDateTo()
+{
+    Console.WriteLine($"Укажите конечную дату");
+    return DateTime.Parse(Console.ReadLine());
+}
+static DateTime FieldDateFrom()
+{
+    Console.WriteLine($"Укажите начальную дату");
+    return DateTime.Parse(Console.ReadLine());
+}
+static int FieldID()
+{
+    Console.WriteLine($"Укажите ID пользователя");
+    return int.Parse(Console.ReadLine());
 }
 static string FieldUserName()
 {

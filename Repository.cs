@@ -79,6 +79,7 @@ namespace HomeWork7
                 if (arrWorker[i].Id==id)
                 {
                     Array.Clear(arrWorker, i, 1);
+                    arrWorker = DeleteNullElements(arrWorker, i);
                     break;
                 }
             }
@@ -102,10 +103,9 @@ namespace HomeWork7
         {
             worker[] arrWorkers = GetAllWorkers();
             arrWorkers.OrderBy(w => w.Id);
-            _totalUser++;
-            Array.Resize(ref arrWorkers, _totalUser); 
-
-            worker.Id = (_totalUser==0)? 1 : arrWorkers[this._totalUser-1].Id+1;
+            worker.Id = (this._totalUser == 0) ? 1 : arrWorkers[this._totalUser - 1].Id + 1;
+            this._totalUser++;
+            Array.Resize(ref arrWorkers, this._totalUser); 
             worker.DateCreate = DateTime.Now;
             //++this._totalUser; Array.Resize(ref arrWorkers, _totalUser);
             arrWorkers[this._totalUser-1] = worker;
@@ -121,11 +121,13 @@ namespace HomeWork7
             {
                 int g = DateTime.Compare(dateFrom,arrWorker[i].DateCreate);
                 int g1 = DateTime.Compare(dateTo,arrWorker[i].DateCreate);
-                if (DateTime.Compare(dateFrom, arrWorker[i].DateCreate)>0 || DateTime.Compare(dateTo, arrWorker[i].DateCreate)<0)
+                if (DateTime.Compare(dateFrom, arrWorker[i].DateCreate)>=0 || DateTime.Compare(dateTo, arrWorker[i].DateCreate)<=0)
                 {
-                    arrWorker = DeleteNullElements(arrWorker,i);
+                    arrWorker = DeleteNullElements(arrWorker, i);
+                    --i;
                 }
             }
+            
             return arrWorker;
             // здесь происходит чтение из файла
             // фильтрация нужных записей
