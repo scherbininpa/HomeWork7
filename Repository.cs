@@ -14,6 +14,8 @@ namespace HomeWork7
         public Repository(string Path)
         {
             this._path = Path;
+            if (!new FileInfo(this._path).Exists)
+            { using (StreamWriter sw = System.IO.File.CreateText(this._path)); }
             this._totalUser = -1;
         }
         private void ReDim(worker[] arr)
@@ -29,28 +31,24 @@ namespace HomeWork7
             string[] UserData;
             worker[] arrWorker=new worker[_totalUser];
             worker tmpWorker = new worker();
-            if (new FileInfo(_path).Exists)
+            using (StreamReader SR = new StreamReader(this._path))
             {
-                using (StreamReader SR = new StreamReader(this._path))
+                while ((line = SR.ReadLine()) != null)
                 {
-                    while ((line = SR.ReadLine()) != null)
-                    {
-                        ++this._totalUser;
-                        UserData = line.Split(_separator);
-                        if (_totalUser >= arrWorker.Length) Array.Resize(ref arrWorker, _totalUser);
+                    ++this._totalUser;
+                    UserData = line.Split(_separator);
+                    if (_totalUser >= arrWorker.Length) Array.Resize(ref arrWorker, _totalUser);
 
-                        tmpWorker.Id = Convert.ToInt32(UserData[0]);
-                        tmpWorker.DateCreate = Convert.ToDateTime(UserData[1]);
-                        tmpWorker.FIO = UserData[2];
-                        tmpWorker.Age = Convert.ToInt32(UserData[3]);
-                        tmpWorker.Height = Convert.ToInt32(UserData[4]);
-                        tmpWorker.DateOfBirth = Convert.ToDateTime(UserData[5]);
-                        tmpWorker.PlaceOfBirth = UserData[6];
-                        arrWorker[this._totalUser - 1] = tmpWorker;
-                    }
+                    tmpWorker.Id = Convert.ToInt32(UserData[0]);
+                    tmpWorker.DateCreate = Convert.ToDateTime(UserData[1]);
+                    tmpWorker.FIO = UserData[2];
+                    tmpWorker.Age = Convert.ToInt32(UserData[3]);
+                    tmpWorker.Height = Convert.ToInt32(UserData[4]);
+                    tmpWorker.DateOfBirth = Convert.ToDateTime(UserData[5]);
+                    tmpWorker.PlaceOfBirth = UserData[6];
+                    arrWorker[this._totalUser - 1] = tmpWorker;
                 }
             }
-            else { System.IO.File.Create(_path); }
             return arrWorker;
         }
 

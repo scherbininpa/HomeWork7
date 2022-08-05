@@ -43,6 +43,30 @@ while (isRepeat)
             Print(repository.GetWorkersBetweenTwoDates(FieldDateFrom(),FieldDateTo()));
             break;
         case "5":
+            Console.WriteLine("Выберите поле для сортировки:" +
+                                "\n\t\t[1] - ФИО" +
+                                "\n\t\t[2] - Возраст" +
+                                "\n\t\t[3] - Дата рождения");
+            worker[] arr = repository.GetAllWorkers();
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    arr.OrderBy(w => w.FIO);
+                    Print(arr);
+                    break;
+                case "2":
+                    arr.OrderBy(w => w.Age);
+                    Print(arr);
+                    break;
+                case "3":
+                    arr.OrderBy(w => w.DateOfBirth);
+                    Print(arr);
+                    break;
+                default:
+                    Console.WriteLine("Команда не опознана");
+                    break;
+            }
+
             break;
         case "6":
             isRepeat = false;
